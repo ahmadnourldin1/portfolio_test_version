@@ -1,15 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Global } from "./styles/Global";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
+import { AuthProvider } from "./components/context/AuthContext";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <Global />
+            <Routes>
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+      </AuthProvider>
+    </Provider>
   </React.StrictMode>
 );
 
